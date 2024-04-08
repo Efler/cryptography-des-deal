@@ -1,6 +1,6 @@
-package org.eflerrr.config;
+package org.eflerrr.config.des;
 
-public final class ExpandKeyConfig {
+public final class DESExpandKeyConfig {
 
     public static final int[] PC_1 = {
             57, 49, 41, 33, 25, 17, 9, 1, 58, 50, 42, 34, 26, 18,

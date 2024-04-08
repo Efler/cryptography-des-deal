@@ -1,4 +1,4 @@
-package org.eflerrr.config;
+package org.eflerrr.config.des;
 
 public final class DESEncryptConversionConfig {
 
