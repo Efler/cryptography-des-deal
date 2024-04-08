@@ -4,7 +4,7 @@ import org.eflerrr.expandkey.IExpandKey;
 
 import java.nio.ByteBuffer;
 
-import static org.eflerrr.config.ExpandKeyConfig.*;
+import static org.eflerrr.config.des.DESExpandKeyConfig.*;
 import static org.eflerrr.utils.Utils.leftCycleShift;
 import static org.eflerrr.utils.Utils.permutation;
 

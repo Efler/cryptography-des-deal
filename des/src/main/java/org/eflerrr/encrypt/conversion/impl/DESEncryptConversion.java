@@ -2,8 +2,8 @@ package org.eflerrr.encrypt.conversion.impl;
 
 import org.eflerrr.encrypt.conversion.IEncryptConversion;
 
-import static org.eflerrr.config.DESEncryptConversionConfig.P_BLOCK_EXPAND;
-import static org.eflerrr.config.DESEncryptConversionConfig.P_BLOCK_PLAIN;
+import static org.eflerrr.config.des.DESEncryptConversionConfig.P_BLOCK_EXPAND;
+import static org.eflerrr.config.des.DESEncryptConversionConfig.P_BLOCK_PLAIN;
 import static org.eflerrr.utils.Utils.*;
 
 public class DESEncryptConversion implements IEncryptConversion {
