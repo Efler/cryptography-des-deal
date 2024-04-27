@@ -34,8 +34,8 @@ public class Utils {
         return res;
     }
 
-    public static byte[] permutation(byte[] block, int[] pBlock, boolean bitReversed) {
-        return permutation(block, pBlock, bitReversed, true);
+    public static byte[] permutation(byte[] block, int[] pBlock, boolean reversedOrder) {
+        return permutation(block, pBlock, reversedOrder, true);
     }
 
     public static byte[] permutation(byte[] block, int[] pBlock) {
