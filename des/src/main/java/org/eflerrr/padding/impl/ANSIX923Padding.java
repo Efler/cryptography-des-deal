@@ -12,7 +12,7 @@ public class ANSIX923Padding implements IPadding {
         int lengthPadding = size - (n % size);
         byte[] result = new byte[n + lengthPadding];
         System.arraycopy(block, 0, result, 0, n);
-        result[n - 1] = (byte) lengthPadding;
+        result[n + lengthPadding - 1] = (byte) lengthPadding;
         return result;
     }
 

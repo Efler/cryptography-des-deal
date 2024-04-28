@@ -11,7 +11,7 @@ public class Paddings {
         ZEROZ, ANSIX923, ISO10126, PKCS7
     }
 
-    public static IPadding get(PaddingType type) {
+    public static IPadding getPadding(PaddingType type) {
         return switch (type) {
             case ZEROZ -> new ZerozPadding();
             case ANSIX923 -> new ANSIX923Padding();
