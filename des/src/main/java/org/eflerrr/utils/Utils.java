@@ -1,5 +1,7 @@
 package org.eflerrr.utils;
 
+import java.security.SecureRandom;
+
 import static org.eflerrr.config.SubstitutionConfig.S_BLOCKS;
 
 public class Utils {
@@ -126,6 +128,12 @@ public class Utils {
 
     public static String bytesToBinaryString(byte[] bytes) {
         return bytesToBinaryString(bytes, "");
+    }
+
+    public static byte[] generateIV(int n) {
+        byte[] res = new byte[n];
+        new SecureRandom().nextBytes(res);
+        return res;
     }
 
 }
