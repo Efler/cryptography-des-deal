@@ -1,5 +1,6 @@
 package org.eflerrr.encrypt.encryptor.impl;
 
+import lombok.Getter;
 import org.eflerrr.encrypt.conversion.IEncryptConversion;
 import org.eflerrr.encrypt.encryptor.IEncryptor;
 import org.eflerrr.expandkey.IExpandKey;
@@ -13,6 +14,8 @@ public class FeistelNetworkEncryptor implements IEncryptor {
     private final IExpandKey expandKey;
     private byte[][] rKeys;
     protected int rounds;
+    @Getter
+    protected int blockLength = 32 / 8;
 
     public FeistelNetworkEncryptor(
             IEncryptConversion encryptConversion,
@@ -24,11 +27,12 @@ public class FeistelNetworkEncryptor implements IEncryptor {
     }
 
     @Override
-    public void setKey(byte[] key) {
+    public IEncryptor setKey(byte[] key) {
         if (key == null) {
             throw new NullPointerException("Key cannot be null!");
         }
         this.rKeys = expandKey.expand(key);
+        return this;
     }
 
     @Override

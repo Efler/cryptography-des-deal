@@ -11,6 +11,7 @@ public class DESEncryptor extends FeistelNetworkEncryptor {
 
     public DESEncryptor() {
         super(new DESEncryptConversion(), new DESExpandKey(), 16);
+        blockLength = 64 / 8;
     }
 
     @Override
