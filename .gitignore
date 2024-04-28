@@ -1,4 +1,5 @@
 .gradle
+des/src/main/java/org/eflerrr/Main.java
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
