@@ -3,10 +3,15 @@ package org.eflerrr.encrypt.mode.impl;
 import org.eflerrr.encrypt.encryptor.IEncryptor;
 import org.eflerrr.encrypt.mode.AEncryptMode;
 
-import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import static org.eflerrr.utils.Utils.xorBits;
 
+@SuppressWarnings("Duplicates")
 public class CTREncryptMode extends AEncryptMode {
 
     public CTREncryptMode(IEncryptor encryptor, int lengthBlock, byte[] IV) {
@@ -31,11 +36,31 @@ public class CTREncryptMode extends AEncryptMode {
 
     @Override
     public byte[] encrypt(byte[] data) {
-        byte[] result = new byte[data.length];
-        IntStream.range(0, data.length / lengthBlock)
-                .parallel()
-                .forEach(i -> process(data, result, i));
-        return result;
+        try (var executor = Executors.newFixedThreadPool(
+                Runtime.getRuntime().availableProcessors() - 1)) {
+            byte[] result = new byte[data.length];
+            List<CompletableFuture<Void>> futures = new ArrayList<>();
+            for (int i = 0; i < data.length / lengthBlock; i++) {
+                int finalI = i;
+                futures.add(
+                        CompletableFuture.runAsync(
+                                () -> process(data, result, finalI), executor
+                        ));
+            }
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+            executor.shutdown();
+            try {
+                if (!executor.awaitTermination(2, TimeUnit.SECONDS)) {
+                    executor.shutdownNow();
+                }
+                return result;
+            } catch (InterruptedException e) {
+                executor.shutdownNow();
+                Thread.currentThread().interrupt();
+                return result;
+            }
+        }
     }
 
     @Override
