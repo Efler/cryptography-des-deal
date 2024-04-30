@@ -83,7 +83,7 @@ public class EncryptorManagerTest {
     private static Stream<Arguments> provideFileTestData() {
         return Stream.of(EncryptModes.Mode.values())
                 .flatMap(mode -> Stream.of(Paddings.PaddingType.values())
-                        .flatMap(type -> IntStream.range(1, 8)
+                        .flatMap(type -> IntStream.range(1, 9)
                                 .mapToObj(threads -> Arguments.of(mode, type, threads))));
     }
 
@@ -91,6 +91,7 @@ public class EncryptorManagerTest {
     @MethodSource("provideTestData")
     public void encryptSyncBlockExactLengthTest(EncryptModes.Mode mode, Paddings.PaddingType type) {
         EncryptorManager manager = new EncryptorManager(KEY, new DESEncryptor(), mode, type, IV);
+        log.info("--- ENCRYPTING PLAIN BYTES (EXACT LENGTH) ---");
         log.info("Mode: {}", mode);
         log.info("Padding: {}", type);
         log.info("Plain text:  hex -> {} ", bytesToHexString(PLAIN_TEXT_EXACT_LENGTH));
@@ -105,6 +106,7 @@ public class EncryptorManagerTest {
     @MethodSource("provideTestData")
     public void encryptSyncBlockWrongLengthTest(EncryptModes.Mode mode, Paddings.PaddingType type) {
         EncryptorManager manager = new EncryptorManager(KEY, new DESEncryptor(), mode, type, IV);
+        log.info("--- ENCRYPTING PLAIN BYTES (WRONG LENGTH) ---");
         log.info("Mode: {}", mode);
         log.info("Padding: {}", type);
         log.info("Plain text:  hex -> {} ", bytesToHexString(PLAIN_TEXT_WRONG_LENGTH));

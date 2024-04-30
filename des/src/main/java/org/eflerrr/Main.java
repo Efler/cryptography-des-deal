@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
-import static org.eflerrr.encrypt.mode.EncryptModes.Mode.RandomDelta;
+import static org.eflerrr.encrypt.mode.EncryptModes.Mode.CTR;
 import static org.eflerrr.padding.Paddings.PaddingType.ISO10126;
 import static org.eflerrr.utils.Utils.generateIV;
 
@@ -28,15 +28,19 @@ public class Main {
                 (byte) 0x9B, (byte) 0xBC, (byte) 0xDF, (byte) 0xF1
         };
 
-        EncryptModes.Mode mode = RandomDelta;
+        EncryptModes.Mode mode = CTR;
         Paddings.PaddingType type = ISO10126;
         int threads = 5;
 
         var inputFile = "message.txt";
-        var encryptedFile = "message_encrypted.txt";
-        var decryptedFile = "message_decrypted.txt";
+        var encryptedFile = inputFile.substring(0, inputFile.lastIndexOf('.'))
+                + "_encrypted"
+                + inputFile.substring(inputFile.lastIndexOf('.'));
+        var decryptedFile = inputFile.substring(0, inputFile.lastIndexOf('.'))
+                + "_decrypted"
+                + inputFile.substring(inputFile.lastIndexOf('.'));
 
-        var folder = "text";
+        var folder = "image";
         // configs ##############################
 
         var manager = new EncryptorManager(
