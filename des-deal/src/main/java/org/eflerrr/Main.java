@@ -90,9 +90,9 @@ public class Main {
             log.info("initial file: {}", inputFile);
             log.info("encrypting file...");
             manager.encryptFileAsync(
-                    Paths.get("des", "src", "main", "resources", folder, inputFile)
+                    Paths.get("des-deal", "src", "main", "resources", folder, inputFile)
                             .toAbsolutePath().toString(),
-                    Paths.get("des", "src", "main", "resources", folder, encryptedFile)
+                    Paths.get("des-deal", "src", "main", "resources", folder, encryptedFile)
                             .toAbsolutePath().toString(),
                     threads);
             log.info("encrypted: {}", encryptedFile);
@@ -103,9 +103,9 @@ public class Main {
         try {
             log.info("decrypting file...");
             manager.decryptFileAsync(
-                    Paths.get("des", "src", "main", "resources", folder, encryptedFile)
+                    Paths.get("des-deal", "src", "main", "resources", folder, encryptedFile)
                             .toAbsolutePath().toString(),
-                    Paths.get("des", "src", "main", "resources", folder, decryptedFile)
+                    Paths.get("des-deal", "src", "main", "resources", folder, decryptedFile)
                             .toAbsolutePath().toString(),
                     threads);
             log.info("decrypted: {}", decryptedFile);
