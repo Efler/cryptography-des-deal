@@ -1,2 +1,2 @@
 rootProject.name = 'cryptography'
-include 'des'
+include 'des-deal'
