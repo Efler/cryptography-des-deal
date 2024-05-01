@@ -25,9 +25,9 @@ public class CTREncryptMode extends AEncryptMode {
         byte[] processBlock = new byte[lengthBlock];
         int lengthHalf = lengthBlock / 2;
         System.arraycopy(IV, 0, processBlock, 0, lengthHalf);
-        byte[] counterInBytes = new byte[Integer.BYTES];
+        byte[] counterInBytes = new byte[lengthHalf];
         for (int j = 0; j < counterInBytes.length; ++j) {
-            counterInBytes[j] = (byte) (i >> (3 - j) * 8);
+            counterInBytes[j] = (byte) (i >> ((lengthHalf - 1) - j) * 8);
         }
         System.arraycopy(counterInBytes, 0, processBlock, lengthHalf, lengthHalf);
         byte[] processedBlock = xorBits(block, encryptor.encrypt(processBlock));

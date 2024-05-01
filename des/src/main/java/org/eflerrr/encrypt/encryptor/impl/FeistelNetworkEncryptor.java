@@ -10,9 +10,9 @@ import static org.eflerrr.utils.Utils.xorBits;
 @SuppressWarnings("Duplicates")
 public class FeistelNetworkEncryptor implements IEncryptor {
 
-    private final IEncryptConversion encryptConversion;
-    private final IExpandKey expandKey;
-    private byte[][] rKeys;
+    protected final IEncryptConversion encryptConversion;
+    protected final IExpandKey expandKey;
+    protected byte[][] rKeys;
     protected int rounds;
     @Getter
     protected int blockLength = 32 / 8;
@@ -79,10 +79,10 @@ public class FeistelNetworkEncryptor implements IEncryptor {
             left = tmp;
         }
 
-        byte[] encryptedBlock = new byte[block.length];
-        System.arraycopy(left, 0, encryptedBlock, 0, half);
-        System.arraycopy(right, 0, encryptedBlock, half, half);
-        return encryptedBlock;
+        byte[] decryptedBlock = new byte[block.length];
+        System.arraycopy(left, 0, decryptedBlock, 0, half);
+        System.arraycopy(right, 0, decryptedBlock, half, half);
+        return decryptedBlock;
     }
 
 }
