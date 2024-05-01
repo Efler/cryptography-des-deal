@@ -1,6 +1,8 @@
 package org.eflerrr.encrypt.manager;
 
 import org.eflerrr.encrypt.encryptor.IEncryptor;
+import org.eflerrr.encrypt.encryptor.impl.DEALEncryptor;
+import org.eflerrr.encrypt.encryptor.impl.DESEncryptor;
 import org.eflerrr.encrypt.mode.AEncryptMode;
 import org.eflerrr.encrypt.mode.EncryptModes;
 import org.eflerrr.padding.IPadding;
@@ -17,10 +19,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.System.arraycopy;
+import static org.eflerrr.encrypt.encryptor.impl.DEALEncryptor.KeyType.*;
 import static org.eflerrr.encrypt.mode.EncryptModes.getMode;
 import static org.eflerrr.padding.Paddings.getPadding;
 
 public class EncryptorManager {
+
+    public enum EncryptionAlgorithm {
+        DES,
+        DEAL_128,
+        DEAL_192,
+        DEAL_256
+    }
 
     protected final AEncryptMode kernelMode;
     protected final IPadding padding;
@@ -32,6 +42,23 @@ public class EncryptorManager {
             EncryptModes.Mode mode,
             Paddings.PaddingType type,
             byte[] InitializationVector) {
+        kernelMode = getMode(mode, encryptor.setKey(key), InitializationVector);
+        padding = getPadding(type);
+        blockLength = encryptor.getBlockLength();
+    }
+
+    public EncryptorManager(
+            byte[] key,
+            EncryptionAlgorithm algorithm,
+            EncryptModes.Mode mode,
+            Paddings.PaddingType type,
+            byte[] InitializationVector) {
+        IEncryptor encryptor = switch (algorithm) {
+            case DES -> new DESEncryptor();
+            case DEAL_128 -> new DEALEncryptor(KEY_SIZE_128);
+            case DEAL_192 -> new DEALEncryptor(KEY_SIZE_192);
+            case DEAL_256 -> new DEALEncryptor(KEY_SIZE_256);
+        };
         kernelMode = getMode(mode, encryptor.setKey(key), InitializationVector);
         padding = getPadding(type);
         blockLength = encryptor.getBlockLength();
