@@ -97,6 +97,35 @@ EncryptorManager manager = new EncryptorManager(
 ```
 
 
+**Шифрование/дешифрование байтов**
+
+_синхронно_
+```
+byte[] plainText = new byte[] {
+        (byte) 0x00, (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04,
+        (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08, (byte) 0x09
+};
+
+byte[] encryptedText = manager.encryptSync(plainText);      // шифрование
+byte[] decryptedText = manager.decryptSync(encryptedText);  // дешифрование
+
+// Arrays.equals(plainText, decryptedText)   --> true
+```
+
+_aсинхронно_
+```
+byte[] plainText = new byte[] {
+        (byte) 0x00, (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04,
+        (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08, (byte) 0x09
+};
+
+byte[] encryptedText = manager.encryptAsync(plainText, 5);      // шифрование (5 - количество задействованных потоков)
+byte[] decryptedText = manager.decryptAsync(encryptedText, 5);  // дешифрование (5 - количество задействованных потоков)
+
+// Arrays.equals(plainText, decryptedText)   --> true
+```
+
+
 **Шифрование/дешифрование файлов**
 
 _синхронно_
